@@ -1,5 +1,4 @@
 package com.vogella.android.sqliteapp;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
                 listNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(MainActivity.this, DetailsActivity.class);
+                Intent i = new Intent(MainActivity.this, com.vogella.android.sqliteapp.DetailsActivity.class);
                 i.putExtra("url", dataList.get(+position).get(KEY_URL));
                 startActivity(i);
                 }
