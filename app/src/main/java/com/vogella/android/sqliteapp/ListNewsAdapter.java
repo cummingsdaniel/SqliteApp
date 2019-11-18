@@ -43,7 +43,7 @@ class ListNewsAdapter extends BaseAdapter {
             holder.galleryImage = (ImageView) convertView.findViewById(R.id.galleryImage);
             holder.author = (TextView) convertView.findViewById(R.id.author);
             holder.title = (TextView) convertView.findViewById(R.id.title);
-            holder.sdetails = (TextView) convertView.findViewById(R.id.sdetails);
+            holder.sdetails = (TextView) convertView.findViewById(R.id.details);
             holder.time = (TextView) convertView.findViewById(R.id.time);
             convertView.setTag(holder);
         } else {

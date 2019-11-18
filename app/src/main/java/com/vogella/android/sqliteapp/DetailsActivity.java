@@ -1,7 +1,9 @@
 package com.vogella.android.sqliteapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -13,9 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
  * Created by SHAJIB-PC on 9/9/2019.
  */
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends Activity {
     WebView webView;
-    ProgressBar loader;
+    //ProgressBar loader;
     String url = "";
 
     @Override
@@ -25,30 +27,31 @@ public class DetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
-        loader = findViewById(R.id.loader);
+        // = findViewById(R.id.loader);
         webView = findViewById(R.id.webView);
-
+        Log.d("noooooo", url);
 
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setUseWideViewPort(true);
-        webView.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                loader.setVisibility(View.VISIBLE);
-                view.loadUrl(url);
-
-                return true;
-            }
-
-            @Override
-            public void onPageFinished(WebView view, final String url) {
-                loader.setVisibility(View.GONE);
-            }
-        });
-
         webView.loadUrl(url);
+//        webView.setWebViewClient(new WebViewClient() {
+//
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                loader.setVisibility(View.INVISIBLE);
+//                view.loadUrl(url);
+//
+//                return true;
+//            }
+//
+//            @Override
+//            public void onPageFinished(WebView view, final String url) {
+//                loader.setVisibility(View.INVISIBLE);
+//            }
+ //       });
+
+        //webView.loadUrl(url);
 
     }
 }
