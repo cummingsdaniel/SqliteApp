@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
     String API_KEY = "f665129def0f4fc1bab8809ee6fc13da";
-    String NEWS_SOURCE = "techcrunch"; //other news source code at: http://
+    String NEWS_SOURCE = "trump"; //other news source code at: http://
     ListView listNews;
     ProgressBar loader;
 
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... args) {
-            String xml = Function.excuteGet("https://newsapi.org/v2/everything?apiKey=" + API_KEY + "&q=trump" );
+            String xml = Function.excuteGet("https://newsapi.org/v2/everything?apiKey=" + API_KEY + "&q=" +NEWS_SOURCE);
 
 
             return xml;
