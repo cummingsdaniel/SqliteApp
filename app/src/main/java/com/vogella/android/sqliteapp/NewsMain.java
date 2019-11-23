@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,12 +19,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {
+public class NewsMain extends AppCompatActivity {
     String API_KEY = "f665129def0f4fc1bab8809ee6fc13da";
     String NEWS_SOURCE = "trump"; //other news source code at: http://
     ListView listNews;
@@ -80,7 +76,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.item1:
+            case R.id.go_to_favs:
+                Intent jumpToFavourites = new Intent(NewsMain.this, FavouritesActivity.class);
+                startActivity(jumpToFavourites);
+                break;
+            default:
                 break;
         }
         return true;
@@ -124,12 +124,12 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Unexpected error", Toast.LENGTH_SHORT).show();
                 }
 
-                ListNewsAdapter adapter = new ListNewsAdapter(MainActivity.this, dataList);
+                ListNewsAdapter adapter = new ListNewsAdapter(NewsMain.this, dataList);
                 listNews.setAdapter(adapter);
 
                 listNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent i = new Intent(MainActivity.this, com.vogella.android.sqliteapp.DetailsActivity.class);
+                        Intent i = new Intent(NewsMain.this, Article.class);
                         i.putExtra("url", dataList.get(+position).get(KEY_URL));
                         startActivity(i);
                     }
