@@ -67,6 +67,17 @@
             android:weightSum="1">
 
 
+            <Button
+                android:id="@+id/news_save_to_fav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="add to favs"/>
+
+            <Button
+                android:id="@+id/news_goto_article"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="go_to_page"/>
 
             <LinearLayout
                 android:layout_width="0dp"

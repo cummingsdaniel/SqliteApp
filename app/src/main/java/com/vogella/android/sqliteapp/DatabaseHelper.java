@@ -6,23 +6,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "Student.db";
-    public static final String TABLE_NAME = "student_table";
-    public static final String COL_1 = "ID";
-    public static final String COL_2 = "NAME";
-    public static final String COL_3 = "SURNAME";
-    public static final String COL_4 = "MARKS";
+    public static final String DATABASE_NAME = "news.db";
+    public static final String TABLE_NAME = "Fav_table";
+    public static final String COL_ID = "ID";
+    public static final String COL_URL = "URL";
+    public static final String COL_TITLE = "TITlE";
+    public static final String COL_DESCRIPTION = "DESCRIPTION";
+    public static final String COL_IMAGE_URL = "IMAGE";
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
-    @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " +TABLE_NAME+
-                "(ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "NAME TEXT, " +
-                "SURNAME TEXT," +
-                "MARKS)");
+        db.execSQL("CREATE TABLE " + TABLE_NAME + "( " + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COL_URL + " TEXT, " + COL_TITLE +" TEXT, " + COL_DESCRIPTION +" TEXT, " + COL_IMAGE_URL + " TEXT)");
     }
 
     @Override
@@ -31,12 +27,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String name, String surname, String marks) {
+    public boolean insertData(String title, String url, String description, String imageUrl) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2, name);
-        contentValues.put(COL_3, surname);
-        contentValues.put(COL_4, marks);
+        contentValues.put(COL_URL, url);
+        contentValues.put(COL_TITLE, title);
+        contentValues.put(COL_DESCRIPTION, description);
+        contentValues.put(COL_IMAGE_URL, imageUrl);
         long result = db.insert(TABLE_NAME, null, contentValues);
         if(result == -1)
             return false;
