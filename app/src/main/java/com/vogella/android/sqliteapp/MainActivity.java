@@ -7,12 +7,18 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+
 import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
     String API_KEY = "f665129def0f4fc1bab8809ee6fc13da";
@@ -32,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Toolbar newsToolbar = (Toolbar) findViewById(R.id.newsTbMain);
+        setSupportActionBar(newsToolbar);
         listNews = findViewById(R.id.listNews);
         loader = findViewById(R.id.loader);
         listNews.setEmptyView(loader);
