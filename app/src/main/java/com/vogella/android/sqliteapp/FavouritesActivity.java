@@ -7,6 +7,5 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 public class FavouritesActivity extends AppCompatActivity {
-    ArrayList<Article> url;
-    BaseAdapter theA
+
 }

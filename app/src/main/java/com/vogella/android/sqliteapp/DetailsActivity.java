@@ -27,7 +27,8 @@ public class DetailsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         Button addToFavs = (Button) findViewById(R.id.add_to_favs);
-
+//        addToFavs.setOnClickListener( f ->{
+//        });
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
         // = findViewById(R.id.loader);

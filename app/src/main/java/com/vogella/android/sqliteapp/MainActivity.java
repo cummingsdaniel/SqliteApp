@@ -2,6 +2,9 @@ package com.vogella.android.sqliteapp;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -9,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,6 +22,7 @@ import java.util.HashMap;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar newsToolbar = (Toolbar) findViewById(R.id.newsTbMain);
-        setSupportActionBar(newsToolbar);
         listNews = findViewById(R.id.listNews);
         loader = findViewById(R.id.loader);
         listNews.setEmptyView(loader);
@@ -51,6 +54,36 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
 
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.news_main_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.search_item);
+        SearchView sView = (SearchView) searchItem.getActionView();
+        sView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.item1:
+                break;
+        }
+        return true;
     }
 
     class DownloadNews extends AsyncTask<String, Void, String> {
