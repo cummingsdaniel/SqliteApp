@@ -101,6 +101,10 @@ public class NewsMain extends AppCompatActivity {
             return xml;
         }
 
+        public void makeToast(String s){
+            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
+
+        }
         @Override
         protected void onPostExecute(String xml) {
 
@@ -125,7 +129,7 @@ public class NewsMain extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Unexpected error", Toast.LENGTH_SHORT).show();
                 }
 
-                ListNewsAdapter adapter = new ListNewsAdapter(NewsMain.this, dataList);
+                ListNewsAdapter adapter = new ListNewsAdapter(NewsMain.this, dataList, false);
                 listNews.setAdapter(adapter);
 
                 listNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {

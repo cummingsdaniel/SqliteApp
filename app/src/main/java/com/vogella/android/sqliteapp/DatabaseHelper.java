@@ -40,4 +40,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else
             return true;
     }
+    public boolean removeData(String url) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_NAME, COL_URL+"='"+url+"'", null);
+        if(result == 0)
+            return false;
+        else
+            return true;
+    }
 }
