@@ -51,12 +51,12 @@ class ListNewsAdapter extends BaseAdapter {
 
         ListNewsViewHolder holder = null;
             holder = new ListNewsViewHolder();
-            convertView = LayoutInflater.from(activity).inflate(R.layout.list_row, parent, false);
+            convertView = LayoutInflater.from(activity).inflate(R.layout.newsapp_list_row, parent, false);
             holder.galleryImage = (ImageView) convertView.findViewById(R.id.galleryImage);
-            holder.author = (TextView) convertView.findViewById(R.id.author);
+//            holder.author = (TextView) convertView.findViewById(R.id.author);
             holder.title = (TextView) convertView.findViewById(R.id.title);
             holder.sdetails = (TextView) convertView.findViewById(R.id.details);
-            holder.time = (TextView) convertView.findViewById(R.id.time);
+//            holder.time = (TextView) convertView.findViewById(R.id.time);
             holder.saveToFavs = (Button) convertView.findViewById(R.id.news_save_to_fav);
             holder.goToPage = (Button) convertView.findViewById(R.id.news_goto_article);
             holder.removeButton = (Button) convertView.findViewById(R.id.news_remove_from_favs);
@@ -64,10 +64,10 @@ class ListNewsAdapter extends BaseAdapter {
 
         final View view=convertView;
         holder.galleryImage.setId(position);
-        holder.author.setId(position);
+//        holder.author.setId(position);
         holder.title.setId(position);
         holder.sdetails.setId(position);
-        holder.time.setId(position);
+//        holder.time.setId(position);
         DatabaseHelper dbhelper = new DatabaseHelper(activity);
 
         holder.saveToFavs.setOnClickListener(fbtn -> {
@@ -115,9 +115,9 @@ class ListNewsAdapter extends BaseAdapter {
             activity.startActivity(i);
         });
         try{
-            holder.author.setText(song.get(NewsMain.KEY_AUTHER));
+//            holder.author.setText(song.get(NewsMain.KEY_AUTHER));
             holder.title.setText(song.get(NewsMain.KEY_TITLE));
-            holder.time.setText(song.get(NewsMain.KEY_PUBLISHDATE));
+//            holder.time.setText(song.get(NewsMain.KEY_PUBLISHDATE));
             holder.sdetails.setText(song.get(NewsMain.KEY_DESCRIPTION));
 
             if(song.get(NewsMain.KEY_URLTOIMAGE).toString().length() < 5)
@@ -148,6 +148,6 @@ class ListNewsAdapter extends BaseAdapter {
 
 class ListNewsViewHolder {
     ImageView galleryImage;
-    TextView author, title, sdetails, time;
+    TextView /*author,*/ title, sdetails /*,time*/;
     Button saveToFavs, goToPage, removeButton;
 }

@@ -3,7 +3,6 @@ package com.vogella.android.sqliteapp;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -22,7 +21,7 @@ public class FavouritesActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.favourites_list);
+        setContentView(R.layout.newsapp_favourites_list);
         list=new ArrayList<>();
         listFavs = findViewById(R.id.listFav);
         loader = findViewById(R.id.loader);

@@ -24,7 +24,7 @@ import androidx.appcompat.widget.SearchView;
 
 public class NewsMain extends AppCompatActivity {
     String API_KEY = "f665129def0f4fc1bab8809ee6fc13da";
-    String NEWS_SOURCE = "trump"; //other news source code at: http://
+    String INPUT_SEARCH = "trump"; //other news source code at: http://
     ListView listNews;
     ProgressBar loader;
 
@@ -39,7 +39,7 @@ public class NewsMain extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.newsapp_activity_main);
         listNews = findViewById(R.id.listNews);
         loader = findViewById(R.id.loader);
         listNews.setEmptyView(loader);
@@ -56,7 +56,7 @@ public class NewsMain extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.news_main_menu, menu);
+        inflater.inflate(R.menu.newsapp_main_menu, menu);
 
         MenuItem searchItem = menu.findItem(R.id.search_item);
         SearchView sView = (SearchView) searchItem.getActionView();
@@ -95,7 +95,8 @@ public class NewsMain extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... args) {
-            String xml = Function.excuteGet("https://newsapi.org/v2/everything?apiKey=" + API_KEY + "&q=" +NEWS_SOURCE);
+            String xml = Function.excuteGet("https://newsapi.org/v2/everything?apiKey=" + API_KEY + "&q=" +INPUT_SEARCH
+            );
 
 
             return xml;
@@ -117,7 +118,6 @@ public class NewsMain extends AppCompatActivity {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         HashMap<String, String> map = new HashMap<>();
-                        map.put(KEY_AUTHER, jsonObject.optString(KEY_AUTHER));
                         map.put(KEY_TITLE, jsonObject.optString(KEY_TITLE));
                         map.put(KEY_DESCRIPTION, jsonObject.optString(KEY_DESCRIPTION));
                         map.put(KEY_URL, jsonObject.optString(KEY_URL));
@@ -131,6 +131,10 @@ public class NewsMain extends AppCompatActivity {
 
                 ListNewsAdapter adapter = new ListNewsAdapter(NewsMain.this, dataList, false);
                 listNews.setAdapter(adapter);
+
+                listNews.setOnItemClickListener((list, Item, position, id) -> {
+
+                });
 
                 listNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

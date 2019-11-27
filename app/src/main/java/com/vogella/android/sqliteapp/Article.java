@@ -4,14 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.ProgressBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 /**
  * Created by SHAJIB-PC on 9/9/2019.
@@ -25,7 +19,7 @@ public class Article extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
+        setContentView(R.layout.newsapp_articale_activity);
         Button addToFavs = (Button) findViewById(R.id.add_to_favs);
 //        addToFavs.setOnClickListener( f ->{
 //        });
