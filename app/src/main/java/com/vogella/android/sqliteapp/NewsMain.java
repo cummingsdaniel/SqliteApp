@@ -1,4 +1,6 @@
 package com.vogella.android.sqliteapp;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -58,26 +60,36 @@ public class NewsMain extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.newsapp_main_menu, menu);
 
-        MenuItem searchItem = menu.findItem(R.id.search_item);
-        SearchView sView = (SearchView) searchItem.getActionView();
-        sView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        final SearchView searchView = (SearchView) menu.findItem(R.id.newsapp_search_item)
+                .getActionView();
+        MenuItem searchMenuItem = menu.findItem(R.id.newsapp_search_item);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setQueryHint("Click to Search....");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                //Perform the final search
+                if(query.length() > 2) {
+
+                }
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
+                //Text has changed, apply filltering?
+                INPUT_SEARCH = newText;
                 return false;
             }
         });
+        searchMenuItem.getIcon().setVisible(false, false);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.go_to_favs:
+            case R.id.newsapp_go_to_favs:
                 Intent jumpToFavourites = new Intent(NewsMain.this, FavouritesActivity.class);
                 startActivity(jumpToFavourites);
                 break;
