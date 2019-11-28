@@ -71,6 +71,7 @@ public class NewsMain extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 //Perform the final search
                 if(query.length() > 2) {
+                    INPUT_SEARCH = query;
 
                 }
                 return false;
@@ -78,11 +79,11 @@ public class NewsMain extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 //Text has changed, apply filltering?
-                INPUT_SEARCH = newText;
                 return false;
             }
         });
         searchMenuItem.getIcon().setVisible(false, false);
+
         return true;
     }
 
