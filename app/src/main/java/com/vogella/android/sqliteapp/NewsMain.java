@@ -71,8 +71,10 @@ public class NewsMain extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 //Perform the final search
                 if(query.length() > 2) {
+                    dataList.clear();
                     INPUT_SEARCH = query;
-
+                    DownloadNews search = new DownloadNews();
+                    search.execute();
                 }
                 return false;
             }

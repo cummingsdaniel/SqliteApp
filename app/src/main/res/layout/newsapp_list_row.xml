@@ -57,23 +57,6 @@
             android:ellipsize="end"
             android:text="Description"/>
 
-<!--        <TextView-->
-<!--            android:id="@+id/author"-->
-<!--            android:textSize="15sp"-->
-<!--            android:textColor="#42A5F5"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="News Author"/>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/time"-->
-<!--            android:gravity="right"-->
-<!--            android:textSize="14sp"-->
-<!--            android:textColor="#42A5F5"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Time"/>-->
-
 
         <LinearLayout
             android:layout_width="match_parent"
