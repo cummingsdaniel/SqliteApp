@@ -10,12 +10,9 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-/**
- * Created by SHAJIB-PC on 9/9/2019.
- */
 
 public class Article extends Activity {
-    WebView webView;
+    WebView articleWebView;
     ProgressBar loader;
     String url = "";
 
@@ -29,13 +26,13 @@ public class Article extends Activity {
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
         loader = findViewById(R.id.loader);
-        webView = findViewById(R.id.webView);
+        articleWebView = findViewById(R.id.webView);
         Log.d("noooooo", url);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setLoadWithOverviewMode(true);
-        webView.getSettings().setUseWideViewPort(true);
+        articleWebView.getSettings().setJavaScriptEnabled(true);
+        articleWebView.getSettings().setLoadWithOverviewMode(true);
+        articleWebView.getSettings().setUseWideViewPort(true);
 //        webView.loadUrl(url);
-        webView.setWebViewClient(new WebViewClient() {
+        articleWebView.setWebViewClient(new WebViewClient() {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -51,7 +48,7 @@ public class Article extends Activity {
             }
         });
 
-        webView.loadUrl(url);
+        articleWebView.loadUrl(url);
 
     }
 }
