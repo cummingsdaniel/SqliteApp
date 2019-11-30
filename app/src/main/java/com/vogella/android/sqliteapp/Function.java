@@ -16,23 +16,23 @@ public class Function {
 
     public static String excuteGet(String targetURL) {
         URL url;
-        HttpURLConnection connection = null;
+        HttpURLConnection urlConnection = null;
         try {
             url = new URL(targetURL);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestProperty("Content-type", "application/json; charset=utf-8");
-            connection.setRequestProperty("Content-Language", "en-US");
-            connection.setUseCaches(false);
-            connection.setDoInput(true);
-            connection.setDoOutput(false);
+            urlConnection = (HttpURLConnection) url.openConnection();
+//            urlConnection.setRequestProperty("Content-type", "application/json; charset=utf-8");
+//            urlConnection.setRequestProperty("Content-Language", "en-US");
+//            urlConnection.setUseCaches(false);
+//            urlConnection.setDoInput(true);
+//            urlConnection.setDoOutput(false);
 
             InputStream is;
-            int status = connection.getResponseCode();
+            int status = urlConnection.getResponseCode();
 
             if (status != HttpURLConnection.HTTP_OK) {
-                is = connection.getErrorStream();
+                is = urlConnection.getErrorStream();
             } else {
-                is = connection.getInputStream();
+                is = urlConnection.getInputStream();
             }
 
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
@@ -49,8 +49,8 @@ public class Function {
             return null;
         }
         finally {
-            if(connection != null) {
-                connection.disconnect();
+            if(urlConnection != null) {
+                urlConnection.disconnect();
             }
         }
     }
