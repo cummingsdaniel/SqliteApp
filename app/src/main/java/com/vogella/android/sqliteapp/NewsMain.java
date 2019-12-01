@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Node;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -37,10 +39,6 @@ public class NewsMain extends AppCompatActivity {
     ListView listNews;
     ProgressBar progressBar;
     ArrayList<HashMap<String, String>> dataList = new ArrayList<>(); //an Arraylist that will map(<key, value>)
-                                                                    // the keys and values of the data structure
-                                                                    // Shortening strings with long texts to a fixed length value.
-                                                                    // that value represents the original string and indexes
-                                                                    //the key and values in a Node link list
 
     static final String API_KEY = "f665129def0f4fc1bab8809ee6fc13da"; //API key
     String INPUT_SEARCH = "trump"; //input search key. For now it is set to the value of trump as a default to ensure it works
@@ -117,8 +115,9 @@ public class NewsMain extends AppCompatActivity {
         }
         return true;
     }
-    /**/
+    /*A private AsyncTask inherited class for the datalist.*/
     private class DownloadNews extends AsyncTask<String, Void, String> {
+        String responseType;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -135,14 +134,13 @@ public class NewsMain extends AppCompatActivity {
 
 
         @Override
-        protected void onPostExecute(String xml) {
-
-            if (xml.length() > 10) { //Just checking if https address is not empty
-
+        protected void onPostExecute(String sentFromDoInBackground) {
+            if (sentFromDoInBackground.length() > 10) { //Just checking if https address is not empty
                 try {
-                    JSONObject jsonResponse = new JSONObject(xml);
-                    JSONArray jsonArray = jsonResponse.optJSONArray("articles");
-
+                    JSONObject jsonResponse = new JSONObject(sentFromDoInBackground);
+                    JSONArray jsonArray = jsonResponse.optJSONArray("articles");//
+                    /*the keys and values of the data structure. Shortening strings with long texts to a fixed length value.
+                     that value represents the original string and indexes the key and values in a Node link list*/
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         HashMap<String, String> map = new HashMap<>();
@@ -152,7 +150,7 @@ public class NewsMain extends AppCompatActivity {
                         map.put(KEY_URLTOIMAGE, jsonObject.optString(KEY_URLTOIMAGE));
                         dataList.add(map);
                     }
-                } catch (JSONException e) {
+                } catch (JSONException e) { //catches
                     Toast.makeText(getApplicationContext(), "Unexpected error", Toast.LENGTH_SHORT).show();
                 }
 
@@ -160,15 +158,12 @@ public class NewsMain extends AppCompatActivity {
                 listNews.setAdapter(adapter);
 
                 listNews.setOnItemClickListener((list, Item, position, id) -> {
-
                 });
 
-                listNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent i = new Intent(NewsMain.this, Article.class);
-                        i.putExtra("url", dataList.get(+position).get(KEY_URL));
-                        startActivity(i);
-                    }
+                listNews.setOnItemClickListener((parent, view, position, id) -> {
+                    Intent i = new Intent(NewsMain.this, Article.class);
+                    i.putExtra("url", dataList.get(+position).get(KEY_URL));
+                    startActivity(i);
                 });
 
             } else {
@@ -176,6 +171,9 @@ public class NewsMain extends AppCompatActivity {
             }
         }
 
-
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
     }
 }
