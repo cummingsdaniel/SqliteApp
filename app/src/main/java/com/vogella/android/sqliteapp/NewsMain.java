@@ -24,42 +24,59 @@ import java.util.HashMap;
 
 import androidx.appcompat.widget.SearchView;
 
-public class NewsMain extends AppCompatActivity {
-    String API_KEY = "f665129def0f4fc1bab8809ee6fc13da";
-    String INPUT_SEARCH = "trump"; //other news source code at: http://
-    ListView listNews;
-    ProgressBar loader;
+/**
+ * NewsMain.java
+ * Section 020
+ * Daniel Cummings
+ * 2019-12-02
+ */
 
-    ArrayList<HashMap<String, String>> dataList = new ArrayList<>();
-    static final String KEY_AUTHER = "author";
-    static final String KEY_TITLE = "title";
-    static final String KEY_DESCRIPTION = "description";
-    static final String KEY_URL = "url";
-    static final String KEY_URLTOIMAGE = "urlToImage";
-    static final String KEY_PUBLISHDATE = "publishedAt";
+/*This Class launches the News List interface.*/
+public class NewsMain extends AppCompatActivity {
+
+    ListView listNews;
+    ProgressBar progressBar;
+    ArrayList<HashMap<String, String>> dataList = new ArrayList<>(); //an Arraylist that will map(<key, value>)
+                                                                    // the keys and values of the data structure
+                                                                    // Shortening strings with long texts to a fixed length value.
+                                                                    // that value represents the original string and indexes
+                                                                    //the key and values in a Node link list
+
+    static final String API_KEY = "f665129def0f4fc1bab8809ee6fc13da"; //API key
+    String INPUT_SEARCH = "trump"; //input search key. For now it is set to the value of trump as a default to ensure it works
+    static final String KEY_TITLE = "title"; //title Key
+    static final String KEY_DESCRIPTION = "description"; //description key
+    static final String KEY_URL = "url"; //url key
+    static final String KEY_URLTOIMAGE = "urlToImage"; //image url key
+
+    /*It's Debugging tool...without the crust *slowclap* */
+    public void bread(String s){
+        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.newsapp_activity_main);
-        listNews = findViewById(R.id.listNews);
-        loader = findViewById(R.id.loader);
-        listNews.setEmptyView(loader);
+        setContentView(R.layout.newsapp_activity_main); //initializes Layout of Activity
+        listNews = findViewById(R.id.listNews); //initializes ListView objests
+        progressBar = findViewById(R.id.loader); //initializes progress bar
+        listNews.setEmptyView(progressBar); //instantiates the progress bar to show if adaptor is empty
 
-        if(Function.isNetworkAvailable((getApplicationContext()))) {
+        /*makes a toast if internet isn't working*/
+        if(InternetStuff.isNetworkAvailable((getApplicationContext()))) {
             DownloadNews newsTask = new DownloadNews();
             newsTask.execute();
         } else {
-            Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
-
+            bread("no Internets.");
         }
     }
 
+    /*This inflates the Search bar on click*/
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.newsapp_main_menu, menu);
-
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         final SearchView searchView = (SearchView) menu.findItem(R.id.newsapp_search_item)
                 .getActionView();
@@ -67,12 +84,12 @@ public class NewsMain extends AppCompatActivity {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setQueryHint("Click to Search....");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            /*Performs the search*/
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //Perform the final search
                 if(query.length() > 2) {
                     dataList.clear();
-                    INPUT_SEARCH = query;
+                    INPUT_SEARCH = query; //assigns the input query as the input search value
                     DownloadNews search = new DownloadNews();
                     search.execute();
                 }
@@ -80,7 +97,6 @@ public class NewsMain extends AppCompatActivity {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-                //Text has changed, apply filltering?
                 return false;
             }
         });
@@ -89,7 +105,7 @@ public class NewsMain extends AppCompatActivity {
         return true;
     }
 
-    @Override
+    @Override /*options on the toolbar*/
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.newsapp_go_to_favs:
@@ -101,30 +117,27 @@ public class NewsMain extends AppCompatActivity {
         }
         return true;
     }
-
-    class DownloadNews extends AsyncTask<String, Void, String> {
+    /**/
+    private class DownloadNews extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
+
+        /*executes the newslist in the background*/
         @Override
         protected String doInBackground(String... args) {
-            String xml = Function.excuteGet("https://newsapi.org/v2/everything?apiKey=" + API_KEY + "&q=" +INPUT_SEARCH
+            String xml = InternetStuff.excuteGet("https://newsapi.org/v2/everything?apiKey=" + API_KEY + "&q=" +INPUT_SEARCH
             );
-
-
             return xml;
         }
 
-        public void makeToast(String s){
-            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
 
-        }
         @Override
         protected void onPostExecute(String xml) {
 
-            if (xml.length() > 10) { //Just checking if not empty
+            if (xml.length() > 10) { //Just checking if https address is not empty
 
                 try {
                     JSONObject jsonResponse = new JSONObject(xml);
@@ -137,7 +150,6 @@ public class NewsMain extends AppCompatActivity {
                         map.put(KEY_DESCRIPTION, jsonObject.optString(KEY_DESCRIPTION));
                         map.put(KEY_URL, jsonObject.optString(KEY_URL));
                         map.put(KEY_URLTOIMAGE, jsonObject.optString(KEY_URLTOIMAGE));
-                        map.put(KEY_PUBLISHDATE, jsonObject.optString(KEY_PUBLISHDATE));
                         dataList.add(map);
                     }
                 } catch (JSONException e) {

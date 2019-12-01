@@ -7,8 +7,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/*InternetStuff is a functional based programming class call.
+* It does 2 things: returns a yes or no on whether internet is working
+* builds the input string if the reply is JSON*/
 
-public class Function {
+public class InternetStuff {
     public static boolean isNetworkAvailable(Context context) {
         return ((ConnectivityManager)context.getSystemService
                 (context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo() != null;
@@ -20,29 +23,24 @@ public class Function {
         try {
             url = new URL(targetURL);
             urlConnection = (HttpURLConnection) url.openConnection();
-//            urlConnection.setRequestProperty("Content-type", "application/json; charset=utf-8");
-//            urlConnection.setRequestProperty("Content-Language", "en-US");
-//            urlConnection.setUseCaches(false);
-//            urlConnection.setDoInput(true);
-//            urlConnection.setDoOutput(false);
 
-            InputStream is;
+            InputStream inputStream;
             int status = urlConnection.getResponseCode();
 
             if (status != HttpURLConnection.HTTP_OK) {
-                is = urlConnection.getErrorStream();
+                inputStream = urlConnection.getErrorStream();
             } else {
-                is = urlConnection.getInputStream();
+                inputStream = urlConnection.getInputStream();
             }
 
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             StringBuffer response = new StringBuffer();
-            while ((line = rd.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 response.append(line);
                 response.append('\r');
             }
-            rd.close();
+            reader.close();
             return response.toString();
         }
         catch (Exception e) {

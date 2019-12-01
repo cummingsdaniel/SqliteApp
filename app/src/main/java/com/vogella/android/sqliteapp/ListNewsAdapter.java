@@ -65,7 +65,7 @@ class ListNewsAdapter extends BaseAdapter {
 
         holder.saveToFavs.setOnClickListener(fbtn -> {
 
-            Log.d("fddasgasggfg", "Saved to fav");
+            Log.d("This thing...", "Saved to fav");
             HashMap<String, String> map = getItem(position);
 
             if(dbhelper.insertData(map.get(NewsMain.KEY_TITLE),

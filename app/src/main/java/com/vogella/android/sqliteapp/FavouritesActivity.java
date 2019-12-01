@@ -3,7 +3,6 @@ package com.vogella.android.sqliteapp;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -14,18 +13,17 @@ import java.util.HashMap;
 
 public class FavouritesActivity extends AppCompatActivity {
     ListView listFavs;
-    ProgressBar loader;
-    Button hateNow;
+    ProgressBar progressBar;
     ListNewsAdapter listFavsAdapter = null;
-    ArrayList<HashMap<String, String>> list =null;
+    ArrayList<HashMap<String, String>> list =null; //an Arraylist that holds
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newsapp_favourites_list);
         list=new ArrayList<>();
         listFavs = findViewById(R.id.listFav);
-        loader = findViewById(R.id.loader);
-        listFavs.setEmptyView(loader);
+        progressBar = findViewById(R.id.loader);
+        listFavs.setEmptyView(progressBar);
         listFavs.setAdapter(listFavsAdapter = new ListNewsAdapter(this, list, true));
 
 
@@ -46,7 +44,8 @@ public class FavouritesActivity extends AppCompatActivity {
             String description = dbresult.getString(descriptionColIndex);
             String imageUrl = dbresult.getString(imageColIndex);
             HashMap<String, String> data = new HashMap<>();
-            //add the new Contact to the array list:
+
+            //adds the new Article to the array list:
             data.put(NewsMain.KEY_URL, url);
             data.put(NewsMain.KEY_TITLE, title);
             data.put(NewsMain.KEY_DESCRIPTION, description);
