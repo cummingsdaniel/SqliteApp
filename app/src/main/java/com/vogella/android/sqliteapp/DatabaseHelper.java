@@ -4,7 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+/**
+ * InternetStuff.java
+ * Section 020
+ * Daniel Cummings
+ * 2019-12-02
+ */
 
+/*This class holds the sqlite database*/
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "news.db";
     public static final String TABLE_NAME = "Fav_table";

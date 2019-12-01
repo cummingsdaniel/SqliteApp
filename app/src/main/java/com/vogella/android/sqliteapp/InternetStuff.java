@@ -6,6 +6,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+/**
+ * InternetStuff.java
+ * Section 020
+ * Daniel Cummings
+ * 2019-12-02
+ */
 
 /*InternetStuff is a functional based programming class call.
 * It does 2 things: returns a yes or no on whether internet is working

@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -19,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,7 +55,7 @@ public class NewsMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newsapp_activity_main); //initializes Layout of Activity
         listNews = findViewById(R.id.listNews); //initializes ListView objests
-        progressBar = findViewById(R.id.loader); //initializes progress bar
+        progressBar = findViewById(R.id.newsapp_progressbar); //initializes progress bar
         listNews.setEmptyView(progressBar); //instantiates the progress bar to show if adaptor is empty
 
         /*makes a toast if internet isn't working*/
@@ -174,6 +171,9 @@ public class NewsMain extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
+
+
+
         }
     }
 }

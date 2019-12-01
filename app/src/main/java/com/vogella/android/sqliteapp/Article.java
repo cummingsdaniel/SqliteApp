@@ -9,7 +9,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
-
+/**
+ * Article.java
+ * Section 020
+ * Daniel Cummings
+ * 2019-12-02
+ */
+/*This is the Article activity class. */
 public class Article extends Activity {
     WebView articleWebView;
     ProgressBar progressBar;
@@ -21,7 +27,7 @@ public class Article extends Activity {
         setContentView(R.layout.newsapp_articale_activity);
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
-        progressBar = findViewById(R.id.loader);
+        progressBar = findViewById(R.id.newsapp_progressbar);
         articleWebView = findViewById(R.id.webView);
         Log.d("noooooo", url);
         articleWebView.getSettings().setJavaScriptEnabled(true); /*sets the webView to enable Javascript Execution*/
@@ -30,15 +36,15 @@ public class Article extends Activity {
         articleWebView.setWebViewClient(new WebViewClient() {
 
 
-
+            /*sets the visability of the progress bar in front of webview*/
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 progressBar.setVisibility(View.INVISIBLE);
                 view.loadUrl(url);
-
                 return true;
             }
 
+            /*sets the visability of the progress bar to Invisible on finished page */
             @Override
             public void onPageFinished(WebView view, final String url) {
                 progressBar.setVisibility(View.INVISIBLE);

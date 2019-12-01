@@ -10,21 +10,26 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+/**
+ * InternetStuff.java
+ * Section 020
+ * Daniel Cummings
+ * 2019-12-02
+ */
 public class FavouritesActivity extends AppCompatActivity {
     ListView listFavs;
     ProgressBar progressBar;
     ListNewsAdapter listFavsAdapter = null;
-    ArrayList<HashMap<String, String>> list =null; //an Arraylist that holds
+    ArrayList<HashMap<String, String>> favList =null; //an Arraylist that holds
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newsapp_favourites_list);
-        list=new ArrayList<>();
+        favList=new ArrayList<>();
         listFavs = findViewById(R.id.listFav);
-        progressBar = findViewById(R.id.loader);
+        progressBar = findViewById(R.id.newsapp_progressbar);
         listFavs.setEmptyView(progressBar);
-        listFavs.setAdapter(listFavsAdapter = new ListNewsAdapter(this, list, true));
+        listFavs.setAdapter(listFavsAdapter = new ListNewsAdapter(this, favList, true));
 
 
         DatabaseHelper dbOpener = new DatabaseHelper(this);
@@ -50,7 +55,7 @@ public class FavouritesActivity extends AppCompatActivity {
             data.put(NewsMain.KEY_TITLE, title);
             data.put(NewsMain.KEY_DESCRIPTION, description);
             data.put(NewsMain.KEY_URLTOIMAGE, imageUrl);
-            list.add(data);
+            favList.add(data);
         }
         listFavsAdapter.notifyDataSetChanged();
 

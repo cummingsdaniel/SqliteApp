@@ -18,7 +18,7 @@
         android:padding="4dp">
 
         <ImageView
-            android:id="@+id/galleryImage"
+            android:id="@+id/newsapp_listrow_galleryImage"
             android:layout_width="113dp"
             android:layout_height="96dp" />
     </LinearLayout>
@@ -32,7 +32,7 @@
         android:layout_weight="7"
         >
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/newsapp_listrow_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:shadowColor="#000"
@@ -46,7 +46,7 @@
             android:text="Title"/>
 
         <TextView
-            android:id="@+id/details"
+            android:id="@+id/newsapp_listrow_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#777777"

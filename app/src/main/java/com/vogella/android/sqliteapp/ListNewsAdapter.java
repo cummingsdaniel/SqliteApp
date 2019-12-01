@@ -21,123 +21,139 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * ListNewsAdapter.java
+ * Section 020
+ * Daniel Cummings
+ * 2019-12-02
+ */
 
+/*the adapter class that implements the interface for NewsMain or FavouritesActivity*/
 class ListNewsAdapter extends BaseAdapter {
-    private Activity activity;
-    private ArrayList<HashMap<String, String>> data;
-    private boolean isFav;
+    private Activity activity;  // the activity
+    private ArrayList<HashMap<String, String>> hashMapArrayList;//an Arraylist that will map(<key, value>) as data
+    private boolean isFav; // a boolean that determains weather its Favourites list or not.
 
-    public ListNewsAdapter(Activity a, ArrayList<HashMap<String, String>> d,boolean isFav) {
-        activity = a;
-        data=d;
+    /*Class Constructer with parameters*/
+    public ListNewsAdapter(Activity activity, ArrayList<HashMap<String, String>> hashMapArrayList ,boolean isFav) {
+        this.activity = activity;
+        this.hashMapArrayList = hashMapArrayList;
         this.isFav = isFav;
     }
+    public void bread(String s){
+        Toast.makeText(activity, s, Toast.LENGTH_SHORT);
+    }
+    /*returns the hash map arraylists size*/
     public int getCount() {
-
-        return data.size();
+        return hashMapArrayList.size();
     }
-
+    /*returns what to show at row position of Hash Map*/
     public HashMap<String, String>  getItem(int position) {
-        return data.get(position);
+        return hashMapArrayList.get(position);
     }
+    /*returns the database id of the item at position of ArrayList*/
     public long getItemId(int position) {
         return position;
     }
+    /*Specifies how each Row in the News list will look*/
+    public View getView(int position, View freshView, ViewGroup parent) {
+        ListNewsRow listNewsRow = null;
+            listNewsRow = new ListNewsRow();
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+        // The Layout Inflater is initialized to the LayoutInflater in context to the activity
+            LayoutInflater inflater = LayoutInflater.from(activity);
+        //freshView is now the root object for finding the widgets
+            freshView = inflater.inflate(R.layout.newsapp_list_row, parent, false);
+        //the objects of the news list row are initialized to the widgets of the xml file.
+            listNewsRow.galleryImage = (ImageView) freshView.findViewById(R.id.newsapp_listrow_galleryImage);
+            listNewsRow.title = (TextView) freshView.findViewById(R.id.newsapp_listrow_title);
+            listNewsRow.description = (TextView) freshView.findViewById(R.id.newsapp_listrow_description);
+            listNewsRow.saveToFavs = (Button) freshView.findViewById(R.id.news_save_to_fav);
+            listNewsRow.goToPage = (Button) freshView.findViewById(R.id.news_goto_article);
+            listNewsRow.removeButton = (Button) freshView.findViewById(R.id.news_remove_from_favs);
+        //Sets a tag associated with the view and a key.
+            freshView.setTag(listNewsRow);
+        //fresh view is finalized to a view for later use.
+        final View view = freshView;
+        //ID are set to the ImageView and textView objects
+        listNewsRow.galleryImage.setId(position);
+        listNewsRow.title.setId(position);
+        listNewsRow.description.setId(position);
 
-        ListNewsViewHolder holder = null;
-            holder = new ListNewsViewHolder();
-            convertView = LayoutInflater.from(activity).inflate(R.layout.newsapp_list_row, parent, false);
-            holder.galleryImage = (ImageView) convertView.findViewById(R.id.galleryImage);
-            holder.title = (TextView) convertView.findViewById(R.id.title);
-            holder.sdetails = (TextView) convertView.findViewById(R.id.details);
-            holder.saveToFavs = (Button) convertView.findViewById(R.id.news_save_to_fav);
-            holder.goToPage = (Button) convertView.findViewById(R.id.news_goto_article);
-            holder.removeButton = (Button) convertView.findViewById(R.id.news_remove_from_favs);
-            convertView.setTag(holder);
-
-        final View view=convertView;
-        holder.galleryImage.setId(position);
-        holder.title.setId(position);
-        holder.sdetails.setId(position);
+        //DatabaseHelper is declaired, initialized and instantiated to the activity
         DatabaseHelper dbhelper = new DatabaseHelper(activity);
 
-        holder.saveToFavs.setOnClickListener(fbtn -> {
-
+        //The add to favs button behavior
+        listNewsRow.saveToFavs.setOnClickListener(fbtn -> {
             Log.d("This thing...", "Saved to fav");
+        //Hasp Map object is declared as map, initialized and instantiated to the position of the ArrayList
             HashMap<String, String> map = getItem(position);
-
             if(dbhelper.insertData(map.get(NewsMain.KEY_TITLE),
                         map.get(NewsMain.KEY_URL),
                         map.get(NewsMain.KEY_DESCRIPTION),
                     map.get(NewsMain.KEY_URLTOIMAGE))){
-                Log.d("fddasgasggfg", "Saved");
-                Snackbar.make(view,"ascadad",Snackbar.LENGTH_SHORT);
-
-                Toast.makeText(activity, "saved to favourites", Toast.LENGTH_SHORT);
+                Log.d("saved to favourites", "Saved");
+                Toast.makeText(activity, "Twas Saved", Toast.LENGTH_SHORT).show();
+                Snackbar.make(view, "This was saved", Snackbar.LENGTH_SHORT).show();
             }else{
-                Toast.makeText(activity, "Nope", Toast.LENGTH_SHORT);
-
+                bread("Nope");
             }
-
-            new AlertDialog.Builder(activity)
-                    .setMessage("This article was saved to favourites")
-                    .setCancelable(false)
-                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Whatever...
-                        }
-                    }).show();
-
         });
 
-        HashMap<String, String> song = data.get(position);
-        String url=song.get(NewsMain.KEY_URL);
-        holder.removeButton.setOnClickListener(rbtn ->{
+        HashMap<String, String> mapThread = hashMapArrayList.get(position);
+        String url = mapThread.get(NewsMain.KEY_URL);
+
+        listNewsRow.removeButton.setOnClickListener(rbtn ->{
             if(dbhelper.removeData(url)) {
                 Log.d("it is deleted", "deleted");
-                activity.finish();
+                new AlertDialog.Builder(activity)
+                        .setMessage("This article was deleted from favourites")
+                        .setCancelable(false)
+                        .setPositiveButton("ok", (dialog, which) ->
+                                Snackbar.make(view, "You are fake news", Snackbar.LENGTH_SHORT).show()).show();
             }
+            activity.recreate();
         });
-        holder.goToPage.setOnClickListener(pbtn ->{
+
+        listNewsRow.goToPage.setOnClickListener(pbtn ->{
             Intent i = new Intent(activity, Article.class);
             i.putExtra("url",url );
             activity.startActivity(i);
         });
-        try{
-            holder.title.setText(song.get(NewsMain.KEY_TITLE));
-            holder.sdetails.setText(song.get(NewsMain.KEY_DESCRIPTION));
 
-            if(song.get(NewsMain.KEY_URLTOIMAGE).toString().length() < 5)
+        try{
+            listNewsRow.title.setText(mapThread.get(NewsMain.KEY_TITLE));
+            listNewsRow.description.setText(mapThread.get(NewsMain.KEY_DESCRIPTION));
+
+            if(mapThread.get(NewsMain.KEY_URLTOIMAGE).toString().length() < 5)
             {
-                holder.galleryImage.setVisibility(View.GONE);
+                listNewsRow.galleryImage.setVisibility(View.GONE);
             }else{
                 Picasso.get()
-                        .load(song.get(NewsMain.KEY_URLTOIMAGE))
+                        .load(mapThread.get(NewsMain.KEY_URLTOIMAGE))
                         .resize(300, 200)
                         .centerCrop()
-                        .into(holder.galleryImage);
+                        .into(listNewsRow.galleryImage);
             }
         }catch(Exception e) {}
 
         if(isFav) {
-            holder.removeButton.setVisibility(View.VISIBLE);
-            holder.saveToFavs.setVisibility(View.INVISIBLE);
+            listNewsRow.removeButton.setVisibility(View.VISIBLE);
+            listNewsRow.saveToFavs.setVisibility(View.INVISIBLE);
         }else{
-            holder.removeButton.setVisibility(View.INVISIBLE);
-            holder.saveToFavs.setVisibility(View.VISIBLE);
+            listNewsRow.removeButton.setVisibility(View.INVISIBLE);
+            listNewsRow.saveToFavs.setVisibility(View.VISIBLE);
         }
-
-        return convertView;
+        return freshView;
     }
 
-
     }
-
-class ListNewsViewHolder {
+/*Functon based class that holds declaired variables of for each row of the ListView*/
+class ListNewsRow {
     ImageView galleryImage;
-    TextView /*author,*/ title, sdetails /*,time*/;
-    Button saveToFavs, goToPage, removeButton;
+    TextView title;
+    TextView description;
+    Button saveToFavs; 
+    Button goToPage;
+    Button removeButton;
 }
