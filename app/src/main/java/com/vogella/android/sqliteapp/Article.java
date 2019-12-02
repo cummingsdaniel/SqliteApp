@@ -33,7 +33,7 @@ public class Article extends Activity {
         Log.d("noooooo", url);
         articleWebView.getSettings().setJavaScriptEnabled(true); /*sets the webView to enable Javascript Execution*/
         articleWebView.getSettings().setLoadWithOverviewMode(true); /*sets web content to fit width wise on screen*/
-        articleWebView.loadUrl(url);
+//        articleWebView.loadUrl(url);
         articleWebView.setWebViewClient(new WebViewClient() {
 
 
