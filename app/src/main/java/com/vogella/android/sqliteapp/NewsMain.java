@@ -48,7 +48,7 @@ public class NewsMain extends AppCompatActivity {
     public void bread(String s){
         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
     }
-
+    public boolean isTablet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class NewsMain extends AppCompatActivity {
         listNews = findViewById(R.id.listNews); //initializes ListView objests
         progressBar = findViewById(R.id.newsapp_progressbar); //initializes progress bar
         listNews.setEmptyView(progressBar); //instantiates the progress bar to show if adaptor is empty
-
+        isTablet = findViewById(R.id.newsapp_favs_fragment) != null;
         /*makes a toast if internet isn't working*/
         if(InternetStuff.isNetworkAvailable((getApplicationContext()))) {
             DownloadNews newsTask = new DownloadNews();
@@ -154,10 +154,13 @@ public class NewsMain extends AppCompatActivity {
                 ListNewsAdapter adapter = new ListNewsAdapter(NewsMain.this, dataList, false);
                 listNews.setAdapter(adapter);
 
-                listNews.setOnItemClickListener((list, Item, position, id) -> {
-                });
 
+/*                if(isTablet) {
+                    ArticaleFragment articaleFragment = new ArticaleFragment();
+                    articaleFragment.setArguments(dataList.get());
+                }*/
                 listNews.setOnItemClickListener((parent, view, position, id) -> {
+
                     Intent i = new Intent(NewsMain.this, Article.class);
                     i.putExtra("url", dataList.get(+position).get(KEY_URL));
                     startActivity(i);

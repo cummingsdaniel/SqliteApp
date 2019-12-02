@@ -101,7 +101,7 @@ class ListNewsAdapter extends BaseAdapter {
 
         HashMap<String, String> mapThread = hashMapArrayList.get(position);
         String url = mapThread.get(NewsMain.KEY_URL);
-
+        //remove button
         listNewsRow.removeButton.setOnClickListener(rbtn ->{
             if(dbhelper.removeData(url)) {
                 Log.d("it is deleted", "deleted");
@@ -113,21 +113,22 @@ class ListNewsAdapter extends BaseAdapter {
             }
             activity.finish();
         });
-
+        //go to link button
         listNewsRow.goToPage.setOnClickListener(pbtn ->{
             Intent i = new Intent(activity, Article.class);
             i.putExtra("url",url );
             activity.startActivity(i);
         });
-
+        //thumbnail loader
         try{
             listNewsRow.title.setText(mapThread.get(NewsMain.KEY_TITLE));
             listNewsRow.description.setText(mapThread.get(NewsMain.KEY_DESCRIPTION));
 
+            //just to make sure it's there
             if(mapThread.get(NewsMain.KEY_URLTOIMAGE).toString().length() < 5)
-            {
+            {   //if not view thumbnail is gone
                 listNewsRow.galleryImage.setVisibility(View.GONE);
-            }else{
+            }else{//otherwise load the jpeg
                 Picasso.get()
                         .load(mapThread.get(NewsMain.KEY_URLTOIMAGE))
                         .resize(300, 200)
@@ -136,10 +137,15 @@ class ListNewsAdapter extends BaseAdapter {
             }
         }catch(Exception e) {}
 
+        //the delete button is visible in the Favourites list
+        // with the save to favs button invisable
         if(isFav) {
             listNewsRow.removeButton.setVisibility(View.VISIBLE);
             listNewsRow.saveToFavs.setVisibility(View.INVISIBLE);
-        }else{
+        }
+        //the delete button is invisible in the Newlist feed
+        // and the save to favs button is visable
+        else{
             listNewsRow.removeButton.setVisibility(View.INVISIBLE);
             listNewsRow.saveToFavs.setVisibility(View.VISIBLE);
         }

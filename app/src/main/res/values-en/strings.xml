@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">News App</string>
+    <string name="newsapp_addToFavs_button_text">Fav it</string>
+    <string name="newsapp_removeFromFavs_button_text">Delete</string>
+    <string name="newsapp_goToPage_button_text">Link</string>
+</resources>
