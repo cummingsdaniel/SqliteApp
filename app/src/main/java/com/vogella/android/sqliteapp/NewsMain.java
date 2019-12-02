@@ -34,6 +34,7 @@ import androidx.appcompat.widget.SearchView;
 public class NewsMain extends AppCompatActivity {
 
     ListView listNews;
+    ProgressBar progressBar;
     ArrayList<HashMap<String, String>> dataList = new ArrayList<>(); //an Arraylist that will map(<key, value>)
 
     static final String API_KEY = "f665129def0f4fc1bab8809ee6fc13da"; //API key
@@ -54,9 +55,8 @@ public class NewsMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newsapp_activity_main); //initializes Layout of Activity
         listNews = findViewById(R.id.listNews); //initializes ListView objests
-        ProgressBar progressBar = findViewById(R.id.newsapp_progressbar); //initializes progress bar
+        progressBar = findViewById(R.id.newsapp_progressbar); //initializes progress bar
         listNews.setEmptyView(progressBar); //instantiates the progress bar to show if adaptor is empty
-        isTablet = findViewById(R.id.newsapp_favs_fragment) != null;
         /*makes a toast if internet isn't working*/
         if(InternetStuff.isNetworkAvailable((getApplicationContext()))) {
             DownloadNews newsTask = new DownloadNews();
