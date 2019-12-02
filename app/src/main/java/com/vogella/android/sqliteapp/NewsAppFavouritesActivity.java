@@ -16,7 +16,7 @@ import java.util.HashMap;
  * Daniel Cummings
  * 2019-12-02
  */
-public class FavouritesActivity extends AppCompatActivity {
+public class NewsAppFavouritesActivity extends AppCompatActivity {
     ListView listFavs;
     ProgressBar progressBar;
     ListNewsAdapter listFavsAdapter = null;
@@ -32,15 +32,15 @@ public class FavouritesActivity extends AppCompatActivity {
         listFavs.setAdapter(listFavsAdapter = new ListNewsAdapter(this, favList, true));
 
 
-        DatabaseHelper dbOpener = new DatabaseHelper(this);
+        NewsAppDatabaseHelper dbOpener = new NewsAppDatabaseHelper(this);
         SQLiteDatabase db = dbOpener.getWritableDatabase();
-        String[] columns = {DatabaseHelper.COL_URL, DatabaseHelper.COL_TITLE, DatabaseHelper.COL_DESCRIPTION, DatabaseHelper.COL_IMAGE_URL};
-        Cursor dbresult = db.query(false, DatabaseHelper.TABLE_NAME, columns, null, null, null, null, null, null);
+        String[] columns = {NewsAppDatabaseHelper.COL_URL, NewsAppDatabaseHelper.COL_TITLE, NewsAppDatabaseHelper.COL_DESCRIPTION, NewsAppDatabaseHelper.COL_IMAGE_URL};
+        Cursor dbresult = db.query(false, NewsAppDatabaseHelper.TABLE_NAME, columns, null, null, null, null, null, null);
 
-        int urlColIndex = dbresult.getColumnIndex(DatabaseHelper.COL_URL);
-        int titleColIndex = dbresult.getColumnIndex(DatabaseHelper.COL_TITLE);
-        int descriptionColIndex = dbresult.getColumnIndex(DatabaseHelper.COL_DESCRIPTION);
-        int imageColIndex = dbresult.getColumnIndex(DatabaseHelper.COL_IMAGE_URL);
+        int urlColIndex = dbresult.getColumnIndex(NewsAppDatabaseHelper.COL_URL);
+        int titleColIndex = dbresult.getColumnIndex(NewsAppDatabaseHelper.COL_TITLE);
+        int descriptionColIndex = dbresult.getColumnIndex(NewsAppDatabaseHelper.COL_DESCRIPTION);
+        int imageColIndex = dbresult.getColumnIndex(NewsAppDatabaseHelper.COL_IMAGE_URL);
 
         while(dbresult.moveToNext())
         {
@@ -60,5 +60,30 @@ public class FavouritesActivity extends AppCompatActivity {
         listFavsAdapter.notifyDataSetChanged();
 
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

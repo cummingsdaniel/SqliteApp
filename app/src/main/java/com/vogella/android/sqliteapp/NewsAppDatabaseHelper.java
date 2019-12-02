@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 /*This class holds the sqlite database*/
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class NewsAppDatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "news.db";
     public static final String TABLE_NAME = "Fav_table";
     public static final String COL_ID = "ID";
@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_TITLE = "TITlE";
     public static final String COL_DESCRIPTION = "DESCRIPTION";
     public static final String COL_IMAGE_URL = "IMAGE";
-    public DatabaseHelper(Context context) {
+    public NewsAppDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 

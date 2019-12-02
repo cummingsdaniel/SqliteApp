@@ -1,7 +1,6 @@
 package com.vogella.android.sqliteapp;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +27,7 @@ import java.util.HashMap;
  * 2019-12-02
  */
 
-/*the adapter class that implements the interface for NewsMain or FavouritesActivity*/
+/*the adapter class that implements the interface for NewsMain or NewsAppFavouritesActivity*/
 class ListNewsAdapter extends BaseAdapter {
     private Activity activity;  // the activity
     private ArrayList<HashMap<String, String>> hashMapArrayList;//an Arraylist that will map(<key, value>) as data
@@ -80,8 +79,8 @@ class ListNewsAdapter extends BaseAdapter {
         listNewsRow.title.setId(position);
         listNewsRow.description.setId(position);
 
-        //DatabaseHelper is declaired, initialized and instantiated to the activity
-        DatabaseHelper dbhelper = new DatabaseHelper(activity);
+        //NewsAppDatabaseHelper is declaired, initialized and instantiated to the activity
+        NewsAppDatabaseHelper dbhelper = new NewsAppDatabaseHelper(activity);
 
         //The add to favs button behavior
         listNewsRow.saveToFavs.setOnClickListener(fbtn -> {
@@ -112,7 +111,7 @@ class ListNewsAdapter extends BaseAdapter {
                         .setPositiveButton("ok", (dialog, which) ->
                                 Snackbar.make(view, "You are fake news", Snackbar.LENGTH_SHORT).show()).show();
             }
-            activity.recreate();
+            activity.finish();
         });
 
         listNewsRow.goToPage.setOnClickListener(pbtn ->{

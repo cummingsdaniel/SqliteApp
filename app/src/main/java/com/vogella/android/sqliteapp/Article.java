@@ -2,6 +2,7 @@ package com.vogella.android.sqliteapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,7 +33,7 @@ public class Article extends Activity {
         Log.d("noooooo", url);
         articleWebView.getSettings().setJavaScriptEnabled(true); /*sets the webView to enable Javascript Execution*/
         articleWebView.getSettings().setLoadWithOverviewMode(true); /*sets web content to fit width wise on screen*/
-
+        articleWebView.loadUrl(url);
         articleWebView.setWebViewClient(new WebViewClient() {
 
 
@@ -53,5 +54,30 @@ public class Article extends Activity {
 
         articleWebView.loadUrl(url);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
