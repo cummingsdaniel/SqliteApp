@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 import androidx.appcompat.widget.SearchView;
 
 /**
@@ -33,12 +36,12 @@ import androidx.appcompat.widget.SearchView;
 /*This Class launches the News List interface.*/
 public class NewsMain extends AppCompatActivity {
 
-    ListView listNews;
-    ProgressBar progressBar;
-    ArrayList<HashMap<String, String>> dataList = new ArrayList<>(); //an Arraylist that will map(<key, value>)
-
     static final String API_KEY = "f665129def0f4fc1bab8809ee6fc13da"; //API key
     String INPUT_SEARCH = "trump"; //input search key. For now it is set to the value of trump as a default to ensure it works
+    ListView listNews;
+    ProgressBar progressBar;
+
+    ArrayList<HashMap<String, String>> dataList = new ArrayList<>(); //an Arraylist that will map(<key, value>)
     static final String KEY_TITLE = "title"; //title Key
     static final String KEY_DESCRIPTION = "description"; //description key
     static final String KEY_URL = "url"; //url key
@@ -57,6 +60,7 @@ public class NewsMain extends AppCompatActivity {
         listNews = findViewById(R.id.listNews); //initializes ListView objests
         progressBar = findViewById(R.id.newsapp_progressbar); //initializes progress bar
         listNews.setEmptyView(progressBar); //instantiates the progress bar to show if adaptor is empty
+
         /*makes a toast if internet isn't working*/
         if(InternetStuff.isNetworkAvailable((getApplicationContext()))) {
             DownloadNews newsTask = new DownloadNews();
@@ -71,6 +75,7 @@ public class NewsMain extends AppCompatActivity {
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.newsapp_main_menu, menu);
+
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         final SearchView searchView = (SearchView) menu.findItem(R.id.newsapp_search_item)
                 .getActionView();
@@ -113,7 +118,6 @@ public class NewsMain extends AppCompatActivity {
     }
     /*A private AsyncTask inherited class for the datalist.*/
     private class DownloadNews extends AsyncTask<String, Void, String> {
-        String responseType;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -170,10 +174,10 @@ public class NewsMain extends AppCompatActivity {
             }
         }
 
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
+//        @Override
+//        protected void onProgressUpdate(Void... values) {
+//            super.onProgressUpdate(values);
+//        }
     }
 
     @Override
